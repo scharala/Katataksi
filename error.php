@@ -33,10 +33,10 @@ if ($_POST["submit"]) {
 			
 			
 	 	 if (!$inputAfm) {
-			 $error="Παρακαλώ πληκτρολογήστε το ΑΦΜ σας";
+			 $error="Παρακαλώ πληκτρολογήστε το ΑΜ σας";
 
-	 	 } elseif(strlen($inputAfm)!=9 || !is_numeric($inputAfm)){
-			$error="Μη έγκυρος ΑΦΜ!!";	 	 	
+	 	 } elseif(strlen($inputAfm)!=6 || !is_numeric($inputAfm)){
+			$error="Μη έγκυρος ΑΜ!!";	 	 	
 	 	 }
 			
 	 	 if (!$inputSurname) {
@@ -66,30 +66,27 @@ if ($_POST["submit"]) {
 			// if($inputAfm.substr(0,1)=="0"){
 			// 	$inputAfm=$inputAfm.substr(1);
 			// }
-			// echo $inputAfm;
+			// echo $inputSurname;
 			$csv->conditions = 'inputAfm is '.$inputAfm.' AND inputSurname is '.$inputSurname;
-			$csv->auto('ESPA.csv');
+			$csv->auto('vathmoi.csv');
 			$parsed = $csv->data;
+			// echo $parsed[0];
 			$inputAfm=$parsed[0][inputAfm];
 			// if(strlen($inputAfm)<9){
 			// 	$inputAfm=
 			// }
 			$inputSurname=$parsed[0][inputSurname];
-			$praksi=$parsed[0][praksi];
+			$vathmos=$parsed[0][vathmos];
+			$pleonazon=$parsed[0][pleonazon];
 			if($inputSurname==""){
-				$result='<div class="alert alert-danger"> H/O συγκεκριμένος Εκπαιδευτικός δεν υπάρχει στην Βάση των Αναπληρωτών Εκπαιδευτικών ΕΣΠΑ/ΠΔΕ </div>';
+				$result='<div class="alert alert-danger"> H/O συγκεκριμένος Εκπαιδευτικός δεν υπάρχει στην Βάση των Εκπαιδευτικών της ΔΙ.Π.Ε. Χανίων </div>';
 			}else{
 				// $_GET['logout']='0';
 				$_SESSION['inputAfm']=$inputAfm;
 				$_SESSION['inputSurname']=$inputSurname;
-				 $result='<div class="alert alert-success">Η πράξη που ανήκει η/ο Εκπαιδευτικός <strong>'.$inputSurname.' με ΑΦΜ '.$inputAfm.'</strong>, είναι: <strong>'.$praksi.' </strong>
-				 <br/> Μπορείτε να κατεβάσετε το παρουσιολόγιο της συγκεκριμένης πράξης <strong> <a href="parousiologia/'.$praksi.'.xls"> εδώ </a> </strong>
-				 <br/> Οδηγίες συμπλήρωσης του παρουσιολογίου υπάρχουν <strong> <a href="parousiologia/odigies.doc"> εδώ </a> </strong> 
-				 <br/> Δείτε την μισθοδοσία σας <strong> <a href="http://www.dipechan.gr/espa-payments/index.php" target="_blank"> εδώ </strong> </a> </div>';
-				 $logged='</ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li><a href="http://www.dipechan.gr/PortalESPA/PortalEspa.php?logout=1"><span class="glyphicon glyphicon-log-out"></span> Αποσυνδεθείτε</a></li>
-      </ul>';
+				 $result='<div class="alert alert-success">H/O Εκπαιδευτικός <strong>'.$inputSurname.' με ΑΜ: '.$inputAfm.'</strong>, κατατάσσεται  <strong>ΑΝΑΔΡΟΜΙΚΑ</strong> από <strong>1-1-2016</strong>  (ημερομηνία έναρξης ισχύος του Ν.4354) στο βαθμό  ν.1566/1985: <strong>'.$vathmos.' </strong>
+				 <br/> με πλεονάζοντα χρόνο κατά την ημερομηνία αυτή: <strong>'.$pleonazon;
+				 
 			}
 
  	} 
